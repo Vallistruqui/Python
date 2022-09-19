@@ -1,7 +1,0 @@
-selenium
-beautifulsoup4
-pandas
-pyautogui
-webdriver_manager
-PyYAML
-lxml
