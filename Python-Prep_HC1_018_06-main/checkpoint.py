@@ -14,7 +14,14 @@ def ListaDivisibles(numero, tope):
         ListaDivisibles(7,50) debe retornar [7,14,21,28,35,42,49]
     '''
     #Tu código aca:
-    return 'Funcion incompleta'
+    list = []
+    multi = 1
+
+    while numero*multi <= tope:
+        list.append(numero*multi)
+        multi +=1
+
+    return list
 
 def Exponente(numero, exponente):
     '''
@@ -26,7 +33,7 @@ def Exponente(numero, exponente):
         Exponente(10,3) debe retornar 1000
     '''
     #Tu código aca:
-    return 'Funcion incompleta'
+    return numero**exponente
 
 def ListaDeListas(lista):
     '''
@@ -42,7 +49,15 @@ def ListaDeListas(lista):
         ListaDeListas([[1,2,[3]],[4]]) debe retornar [1,2,3,4]
     '''
     #Tu código aca:
-    return 'Funcion incompleta'
+    deconstructed_list = []
+    for element in list:
+        try:
+            for sub_element in element:
+                deconstructed_list.append(sub_element)
+        except:
+                deconstructed_list.append(element)
+
+    return deconstructed_list
 
 def Factorial(numero):
     '''
@@ -56,7 +71,13 @@ def Factorial(numero):
         Factorial(0) debe retornar 1
     '''
     #Tu código aca:
-    return 'Funcion incompleta'
+    if numero >= -1:
+        result = 1
+    for i in range(1,numero+1):
+        result *= i
+    else:
+        result = None
+    return result
 
 def ListaPrimos(desde, hasta):
     '''
@@ -74,7 +95,16 @@ def ListaPrimos(desde, hasta):
         ListaPrimos(1,7) debe retonan [1,2,3,5,7]
     '''
     #Tu código aca:
-    return 'Funcion incompleta'
+    prime_list = []
+    for i in range(desde,hasta):
+        dividend_amount = 0
+    for x in range(desde,i+1):
+        if i % x == 0:
+            dividend_amount += 1
+    if dividend_amount <= 2:
+        prime_list.append(i)
+
+    return prime_list
 
 def ListaRepetidos(lista):
     '''
@@ -92,7 +122,16 @@ def ListaRepetidos(lista):
         ListaRepetidos([1,2,2,4]) debe retornar [(1,1),(2,2),(4,1)]
     '''
     #Tu código aca:
-    return 'Funcion incompleta'
+    final_list = []
+    for element in lista:
+        element_counter = 0
+    for sub_element in lista:
+        if element == sub_element:
+           element_counter += 1
+
+    sample = [element,element_counter]
+    final_list.append(sample)
+    return final_list
 
 def ClaseVehiculo(tipo, color):
     '''
@@ -116,6 +155,8 @@ def ClaseVehiculo(tipo, color):
         a.Acelerar(-10) -> debe devolver 15
     '''
     #Tu código aca:
+    
+
     return 'Funcion incompleta'
 
 def OrdenarDiccionario(diccionario_par, clave, descendente=True):
