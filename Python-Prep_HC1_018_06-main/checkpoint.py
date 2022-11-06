@@ -49,14 +49,27 @@ def ListaDeListas(lista):
         ListaDeListas([[1,2,[3]],[4]]) debe retornar [1,2,3,4]
     '''
     #Tu código aca:
-    deconstructed_list = []
-    for element in list:
-        try:
-            for sub_element in element:
-                deconstructed_list.append(sub_element)
-        except:
+    original_list = lista
+
+    while True:
+      if type(original_list) is not list:
+        deconstructed_list = None
+        break
+
+      deconstructed_list = []    
+      for element in lista:
+          if type(element) is list:
+                for sub_element in element:
+                    deconstructed_list.append(sub_element)
+          else:
                 deconstructed_list.append(element)
 
+      a = list(type(x).__name__ for x in deconstructed_list)
+
+      if any(ele == 'list' for ele in a) == False:
+          break
+
+      lista = deconstructed_list
     return deconstructed_list
 
 def Factorial(numero):
@@ -72,11 +85,12 @@ def Factorial(numero):
     '''
     #Tu código aca:
     if numero >= -1:
-        result = 1
+      result = 1
+    else:
+      result = None
+
     for i in range(1,numero+1):
         result *= i
-    else:
-        result = None
     return result
 
 def ListaPrimos(desde, hasta):
@@ -95,14 +109,18 @@ def ListaPrimos(desde, hasta):
         ListaPrimos(1,7) debe retonan [1,2,3,5,7]
     '''
     #Tu código aca:
-    prime_list = []
-    for i in range(desde,hasta):
+    if type(desde) is int and type(hasta) is int:
+      prime_list = []
+      for i in range(desde,hasta+1):
         dividend_amount = 0
-    for x in range(desde,i+1):
-        if i % x == 0:
-            dividend_amount += 1
-    if dividend_amount <= 2:
-        prime_list.append(i)
+
+        for x in range(1,i+1):
+          if i % x == 0:
+              dividend_amount += 1
+        if dividend_amount <= 2:
+            prime_list.append(i)
+    else:
+      prime_list = None
 
     return prime_list
 
@@ -122,15 +140,23 @@ def ListaRepetidos(lista):
         ListaRepetidos([1,2,2,4]) debe retornar [(1,1),(2,2),(4,1)]
     '''
     #Tu código aca:
-    final_list = []
-    for element in lista:
-        element_counter = 0
-    for sub_element in lista:
-        if element == sub_element:
-           element_counter += 1
+    if type(lista) is list:
+        final_list = []
+        while len(lista) > 0:
+          element = lista[0]
+          element_counter = 0
+          for sub_element in lista:
+            if element == sub_element:
+              element_counter += 1
 
-    sample = [element,element_counter]
-    final_list.append(sample)
+          sample = (element,element_counter)
+          final_list.append(sample)
+          
+          for deleter in range(0,element_counter):
+            lista.remove(element)
+    else:
+      final_list = None
+
     return final_list
 
 def ClaseVehiculo(tipo, color):
@@ -155,9 +181,28 @@ def ClaseVehiculo(tipo, color):
         a.Acelerar(-10) -> debe devolver 15
     '''
     #Tu código aca:
-    
+    if tipo not in ['auto','camioneta','moto']:
+        raise ValueError("Accepted 'tipo' variable values are [auto,camioneta,moto]")
+    elif type(color) != str:
+        raise TypeError("Accepted 'color' variable type is string")
 
-    return 'Funcion incompleta'
+    class Vechiculo:
+        def __init__(self, tipo, color):
+            self.tipo = tipo
+            self.color = color
+            self.velocidad = 0
+            
+        # Sample Method   
+        def Acelerar(self,velocidad_agregada):
+            if self.velocidad + velocidad_agregada < 0:
+                self.velocidad = 0
+            elif self.velocidad + velocidad_agregada >= 100:
+                self.velocidad = 100
+            else:
+                self.velocidad += velocidad_agregada
+            return(self.velocidad)
+
+    return Vechiculo(tipo, color)
 
 def OrdenarDiccionario(diccionario_par, clave, descendente=True):
     '''
@@ -186,4 +231,31 @@ def OrdenarDiccionario(diccionario_par, clave, descendente=True):
                                                                 'clave3':[3,2,1]}
     '''
     #Tu código aca:
-    return 'Funcion incompleta'   
+
+    if type(diccionario_par) is dict and clave in diccionario_par.keys():
+        original_position_dict = {}
+
+        for key in diccionario_par.keys():
+            for element in diccionario_par[key]:
+                original_position_dict.update({str(element): diccionario_par[key].index(element)})
+
+        final_disposition = sorted(diccionario_par[clave], reverse = not descendente)
+
+        final_order = []
+
+        for element in final_disposition:
+            final_order.append(original_position_dict[str(element)])
+
+        final_dict = {}
+
+        for key in diccionario_par.keys():
+          loop_array = []
+          for position in final_order:
+              loop_array.append(diccionario_par[key][position])
+
+          final_dict.update({key: loop_array})
+
+    else:
+      final_dict = None
+    
+    return final_dict
